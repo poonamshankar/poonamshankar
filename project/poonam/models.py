@@ -27,6 +27,7 @@ class rooms(models.Model):
 class booking(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE, related_name="user_id")
     room_id = models.ForeignKey(rooms,on_delete=models.CASCADE, related_name="room_id")
-    booking_date = models.IntegerField()
+    booking_date = models.DateTimeField(auto_now_add=True)
+    expected_checkOut_date = models.DateTimeField(auto_now_add=True)
     no_of_staying_day = models.CharField(max_length=40)
     status = models.CharField(max_length=70)

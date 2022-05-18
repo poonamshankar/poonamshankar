@@ -1,0 +1,37 @@
+{% extends 'poonam/layout.html' %}
+
+{% block body %}
+    <!-- welcome -->
+<div class="welcome">
+	<div class="container">
+        <!-- <div class="d-flex justify-content-between">
+
+        </div> -->
+		<h2 class="tittle-one">Floor List</h2>
+        <!-- <a href=""></a> -->
+        <div class="container">
+            <a href="{% url 'add_floor' %}" class="btn btn-danger">Add Floor</a>
+			<table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                {% for i in floors %}
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>Floor {{i.floor_name}}</td>
+                        <td>
+                            <a href="{% url 'edit_floor' i.id %}" class="btn btn-primary">Edit</a>
+                            <a href="" class="btn btn-primary">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+			<div class="clearfix"></div>
+		</div>
+		
+	</div>
+</div>
+<!-- //welcome -->
+{% endblock %}

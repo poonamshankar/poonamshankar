@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>Classic Hotel a Hotel Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Classic Hotel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="{% static 'assets/css/bootstrap.css'%}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'assets/css/style.css'%}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'assets/css/chocolat.css'%}" rel="stylesheet">
+<!-- js -->
+<script src="{% static 'assets/js/jquery-1.11.1.min.js'%}"></script>
+<!-- //js -->
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<!-- start-smoth-scrolling -->
+		<script type="text/javascript" src="{% static 'assets/js/move-top.js'%}"></script>
+		<script type="text/javascript" src="{% static 'assets/js/easing.js'%}"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+		</script>
+	<!-- start-smoth-scrolling -->
+</head>
+<body>
+    <div class="contact">
+        <div class="container">
+            <div class="contact-form">
+                <h3 class="tittle">LOGIN</h3>
+                {% if message %}
+                   <div class="alerts">
+                       {{message}}
+                    </div>
+                {% endif %}
+                <form action="{% url 'login'%}" method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Username" name="username"><br><br><br>
+                    <input type="password" placeholder="Password" name="password"><br><br>
+                    <input type="submit" value="LOGIN">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!--//contact-->
+    
+</body>
+</html>

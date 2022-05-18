@@ -1,0 +1,32 @@
+{% extends 'poonam/layout.html' %}
+
+{% block body %}
+<div class="contact">
+    <div class="container">
+        {% if singleFloor %}
+        <div class="contact-form">
+            <h3 class="tittle">Edit Floor</h3>
+            <form>
+                <input type="text" placeholder="Floor Name" name="floor" value="{{singleFloor.floor_name}}">
+                <!-- <br> -->
+                <!-- <input type="text" placeholder="Password" name="password"> -->
+                <input type="submit" value="Add Floor">
+            </form>
+        </div>
+            {% else %}
+            <div class="contact-form">
+                <h3 class="tittle">Add Floor</h3>
+                <form>
+                    <input type="text" placeholder="Floor Name" name="floor">
+                    <!-- <br> -->
+                    <!-- <input type="text" placeholder="Password" name="password"> -->
+                    <input type="submit" value="Add Floor">
+                </form>
+            </div>
+        {% endif %}
+        
+    </div>
+</div>
+
+<!--//contact-->
+{% endblock %}
