@@ -1,15 +1,20 @@
+from unicodedata import name
 from django.shortcuts import render
-from .models import floor, rooms, rooms_type, booking
-from django.contrib.auth import authenticate,login
+from .models import floor, rooms, rooms_type, booking, User
+from django.contrib.auth import authenticate,login,logout
 from django.db import IntegrityError
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
+
 def slice(request):
     return render(request,'poonam/layout.html')
 
 def log_out(request):
-    return render(request, 'poonam/logout.html')    
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))
+
+    
 
 def login_view(request):
     if request.method == "POST":
@@ -21,7 +26,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("floor"))
         else:
             return render(request, "poonam/login.html",
          {"message": "Invalid username and/or password."
@@ -59,8 +64,36 @@ def all_floors(request):
     return render(request, 'poonam/floors.html', {'floors': floors})
 
 def add_floor(request):
-    return render(request, 'poonam/add_floor.html')
+    if request.method == "POST":
+        name = request.POST["name"] 
+        try:
+            a = floor(floor = name)
+            a.save()
+        except:
+            return render(request, 'poonam/add_floor.html',{"message":'Try Again'})
+        return HttpResponseRedirect(reverse('floors'))    
+    else:
+        return render(request, 'poonam/add_floor.html')
 
 def edit_floor(request, id):
     singleFloor = floor.objects.get(id=id)
-    return render(request, "poonam/add_floor.html", {'singleFloor': singleFloor})
+    if request.method == "POST":
+        name = request.POST["edit_floor"]
+        singleFloor.floor_name = name
+        try:
+            singleFloor.save()
+        except:
+            return render(request, "poonam/edit_floor.html", {'singleFloor': singleFloor 'message':'please try again'})
+        return HttpResponseRedirect(reverse('floor'))
+    else:
+        return render(request, "poonam/edit_floor.html")
+
+
+def delete_floor(request, id):
+    delete = floor.objects.get(id=id)
+    floors = floor.objects.all()
+    try:
+        delete.delete()
+    except:
+           return render(request, 'poonam/floors.html',{'floors':floors}) 
+    return HttpResponseRedirect(reverse('floors'))       

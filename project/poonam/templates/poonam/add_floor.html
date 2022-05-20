@@ -3,30 +3,14 @@
 {% block body %}
 <div class="contact">
     <div class="container">
-        {% if singleFloor %}
-        <div class="contact-form">
-            <h3 class="tittle">Edit Floor</h3>
-            <form>
-                <input type="text" placeholder="Floor Name" name="floor" value="{{singleFloor.floor_name}}">
-                <!-- <br> -->
-                <!-- <input type="text" placeholder="Password" name="password"> -->
-                <input type="submit" value="Add Floor">
-            </form>
+         <div class="contact-form">
+            <h3 class="tittle">Add Floor</h3>
+            <form action="{% url 'add_floor'}" method="post">
+                {% csrf_token %}
+                 <input type="text" placeholder="Floor_name" name="name">
+                 <input type="submit" value="Add Floor">
+             </form>
         </div>
-            {% else %}
-            <div class="contact-form">
-                <h3 class="tittle">Add Floor</h3>
-                <form>
-                    <input type="text" placeholder="Floor Name" name="floor">
-                    <!-- <br> -->
-                    <!-- <input type="text" placeholder="Password" name="password"> -->
-                    <input type="submit" value="Add Floor">
-                </form>
-            </div>
-        {% endif %}
-        
-    </div>
-</div>
-
-<!--//contact-->
+     </div>
+ </div>       
 {% endblock %}

@@ -23,7 +23,7 @@
                         <td>Floor {{i.floor_name}}</td>
                         <td>
                             <a href="{% url 'edit_floor' i.id %}" class="btn btn-primary">Edit</a>
-                            <a href="" class="btn btn-primary">Delete</a>
+                            <a href="{% url 'delete_floor' i.id %}" class="btn btn-primary">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}

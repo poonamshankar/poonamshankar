@@ -43,8 +43,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 {% endif %}
                 <form action="{% url 'login'%}" method="post">
                     {% csrf_token %}
-                    <input type="text" placeholder="Username" name="username"><br><br><br>
-                    <input type="password" placeholder="Password" name="password"><br><br>
+                    <input type="text" placeholder="Username" name="username" required><br><br><br>
+                    <input type="password" placeholder="Password" name="password" required><br><br>
                     <input type="submit" value="LOGIN">
                 </form>
             </div>
