@@ -7,7 +7,7 @@ class User(AbstractUser):
 
 
 class floor(models.Model):
-    floor_name = models.IntegerField()
+    floor_name = models.IntegerField(unique=True)
 
 
 class rooms_type(models.Model):

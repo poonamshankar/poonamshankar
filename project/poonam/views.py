@@ -1,5 +1,7 @@
 from unicodedata import name
 from django.shortcuts import render
+from numpy import single
+from requests import request
 from .models import floor, rooms, rooms_type, booking, User
 from django.contrib.auth import authenticate,login,logout
 from django.db import IntegrityError
@@ -67,11 +69,11 @@ def add_floor(request):
     if request.method == "POST":
         name = request.POST["name"] 
         try:
-            a = floor(floor = name)
+            a = floor(floor_name = name)
             a.save()
         except:
             return render(request, 'poonam/add_floor.html',{"message":'Try Again'})
-        return HttpResponseRedirect(reverse('floors'))    
+        return HttpResponseRedirect(reverse('floor'))    
     else:
         return render(request, 'poonam/add_floor.html')
 
@@ -83,10 +85,10 @@ def edit_floor(request, id):
         try:
             singleFloor.save()
         except:
-            return render(request, "poonam/edit_floor.html", {'singleFloor': singleFloor 'message':'please try again'})
+            return render(request, "poonam/edit_floor.html", {'singleFloor': singleFloor, 'message':'please try again'})
         return HttpResponseRedirect(reverse('floor'))
     else:
-        return render(request, "poonam/edit_floor.html")
+        return render(request, "poonam/edit_floor.html", {'singleFloor': singleFloor})
 
 
 def delete_floor(request, id):
@@ -96,4 +98,58 @@ def delete_floor(request, id):
         delete.delete()
     except:
            return render(request, 'poonam/floors.html',{'floors':floors}) 
-    return HttpResponseRedirect(reverse('floors'))       
+    return HttpResponseRedirect(reverse('floor')) 
+
+
+def all_rooms(request):
+    rooms = rooms_type.objects.all()
+    return render(request, 'poonam/room_type.html',{'rooms':rooms})
+
+
+def add_room(request):
+    if request.method == "POST":
+       name = request.POST["name"]
+       try:
+           a = rooms_type(type_name = name)
+           a.save()
+       except:
+           return render(request, 'poonam/add_room.html',{"message":'Try Again'})
+       return HttpResponseRedirect(reverse('rooms_type'))    
+    else:
+        return render(request, 'poonam/add_room.html')
+  
+
+def edit_room(request,id):
+    room = rooms_type.objects.get(id=id)
+    if request.method=="POST":
+       name= request.POST["name"]
+       room.type_name= name
+       try:  
+            room.save()
+       except:
+        return render(request, "poonam/edit_room.html", {'rooms':room , 'message':'please try again'})
+       return HttpResponseRedirect(reverse('floor'))
+    else:
+     return render(request, "poonam/edit_floor.html",{'rooms':room})
+
+
+def delete_room(request, id):
+    delete = rooms_type.objects.get(id=id)
+    rooms = rooms_type.objects.all()
+    try:
+        delete.delete()
+    except:
+        return render(request, 'poonam/room_type.html',{'rooms':rooms}) 
+    return HttpResponseRedirect(reverse('room_type'))
+
+
+
+
+
+           
+
+    
+
+
+
+

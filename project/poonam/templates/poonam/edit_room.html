@@ -1,0 +1,17 @@
+{% extends 'poonam/layout.html' %}
+
+{% block body%}
+<div class="contact">
+    <div class="container">
+        <div class="contact-form">
+            <h3 class="tittle">Edit Room</h3>
+            <form action="{% url 'edit_room' room.id %}" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder=" Room Name" name="edit_room" value="{{room.type_name}}" min="1"  required>
+                <br>
+                <input type="submit" value="Edit Room">
+            </form>
+        </div>
+    </div>
+</div>        
+{% endblock %}

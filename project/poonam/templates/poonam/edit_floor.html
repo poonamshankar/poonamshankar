@@ -1,18 +1,18 @@
-{% extends 'poonam/laout.html' %}
+{% extends 'poonam/layout.html' %}
 
 {% block body%}
 <div class="contact">
     <div class="container">
         <div class="contact-form">
             <h3 class="tittle">Edit Floor</h3>
-            <form action="{% url 'edit_floor'}" method="post">
+            <form action="{% url 'edit_floor' singleFloor.id %}" method="post">
                 {% csrf_token %}
                 <input type="text" placeholder="Floor Name" name="edit_floor" value="{{singleFloor.floor_name}}">
                 <br>
-                <input type="text" placeholder="Password" name="password">
-                <input type="submit" value="Add Floor">
+                <!-- <input type="text" placeholder="Password" name="password"> -->
+                <input type="submit" value="Edit Floor">
             </form>
         </div>
     </div>
 </div>        
-{% endbody%}
+{% endblock %}

@@ -4,14 +4,14 @@
 <div class="contact">
     <div class="container">
          <div class="contact-form">
-            <h3 class="tittle">Add Floor</h3>
+            <h3 class="tittle">Add Room</h3>
             {% if message %}
                 <div class="alert-danger p-3 mt-2 mb-3">{{message}}</div>
             {% endif %}
-            <form action="{% url 'add_floor' %}" method="post">
+            <form action="{% url 'add_room' %}" method="post">
                 {% csrf_token %}
-                 <input type="number" placeholder="Floor_name" min="1" name="name" required>
-                 <input type="submit" value="Add Floor">
+                 <input type="number" placeholder="room_name" min="1" max="100" name="name" required>
+                 <input type="submit" value="Add Room">
              </form>
         </div>
      </div>
