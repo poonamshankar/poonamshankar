@@ -13,6 +13,8 @@ urlpatterns=[
     path('delete_floor/<int:id>',views.delete_floor, name="delete_floor"),
     path('rooms',views.all_rooms, name="rooms"),
     path('add_room',views.add_room,name="add_room"),
-    path('edit_room',views.)
+    path('edit_room/<int:id>',views.edit_room,name="edit_room"),
+    path('delete_room/<int:id>',views.delete_room,name="delete_room"),
+    path('rooms_information',views.rooms_information,name="rooms_information")
     
 ]

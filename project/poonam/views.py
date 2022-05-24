@@ -1,7 +1,4 @@
-from unicodedata import name
 from django.shortcuts import render
-from numpy import single
-from requests import request
 from .models import floor, rooms, rooms_type, booking, User
 from django.contrib.auth import authenticate,login,logout
 from django.db import IntegrityError
@@ -114,7 +111,7 @@ def add_room(request):
            a.save()
        except:
            return render(request, 'poonam/add_room.html',{"message":'Try Again'})
-       return HttpResponseRedirect(reverse('rooms_type'))    
+       return HttpResponseRedirect(reverse('rooms'))    
     else:
         return render(request, 'poonam/add_room.html')
   
@@ -122,15 +119,15 @@ def add_room(request):
 def edit_room(request,id):
     room = rooms_type.objects.get(id=id)
     if request.method=="POST":
-       name= request.POST["name"]
+       name= request.POST["edit_room"]
        room.type_name= name
        try:  
             room.save()
        except:
         return render(request, "poonam/edit_room.html", {'rooms':room , 'message':'please try again'})
-       return HttpResponseRedirect(reverse('floor'))
+       return HttpResponseRedirect(reverse('rooms'))
     else:
-     return render(request, "poonam/edit_floor.html",{'rooms':room})
+     return render(request, "poonam/edit_room.html",{'rooms':room})
 
 
 def delete_room(request, id):
@@ -140,8 +137,12 @@ def delete_room(request, id):
         delete.delete()
     except:
         return render(request, 'poonam/room_type.html',{'rooms':rooms}) 
-    return HttpResponseRedirect(reverse('room_type'))
+    return HttpResponseRedirect(reverse('rooms'))
 
+
+def rooms_information(request):
+    information =rooms.objects.all()
+    return render(request, 'poonam/all_rooms.html',{'all_room':information})
 
 
 
