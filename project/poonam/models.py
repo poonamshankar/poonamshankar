@@ -11,16 +11,16 @@ class floor(models.Model):
 
 
 class rooms_type(models.Model):
-    type_name = models.CharField(max_length=20)
+    type_name = models.CharField(max_length=20, unique=True)
 
 
 
 class rooms(models.Model):
-    room_no = models.IntegerField()
+    room_no = models.IntegerField(unique=True)
     type_id = models.ForeignKey(rooms_type,on_delete=models.CASCADE, related_name="type_id")
     room_cost = models.IntegerField()
     floor_id = models.ForeignKey(floor,on_delete=models.CASCADE, related_name="floor_id")
-    availibility = models.CharField(max_length=50)
+    availibility = models.BooleanField()
     
     
 
@@ -28,6 +28,6 @@ class booking(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE, related_name="user_id")
     room_id = models.ForeignKey(rooms,on_delete=models.CASCADE, related_name="room_id")
     booking_date = models.DateTimeField(auto_now_add=True)
-    expected_checkOut_date = models.DateTimeField(auto_now_add=True)
+    expected_checkOut_date = models.DateTimeField(auto_now=True)
     no_of_staying_day = models.CharField(max_length=40)
     status = models.CharField(max_length=70)

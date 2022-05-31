@@ -44,6 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <form action="{% url 'register' %}" method="post">
                     {% csrf_token%}
                     <input type="text" placeholder="Username" name="username" required><br><br><br>
+                    <input type="email" placeholder="Email" name="email" required><br><br><br>
                     <input type="password" placeholder="Password" name="password" required><br><br>
                     <input type="password" placeholder="confirm password" name="conform_password" requard><br><br>
                     <input type="submit" value="LOGIN">

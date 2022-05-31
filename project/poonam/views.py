@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.db import IntegrityError
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def slice(request):
@@ -24,8 +25,11 @@ def login_view(request):
         password=password)
         # Check if authentication successful
         if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("floor"))
+            if user.is_superuser:
+                login(request, user)
+                return HttpResponseRedirect(reverse("floor"))
+            else:
+                return render(request, "poonam/login.html", {"message": "not admin."})
         else:
             return render(request, "poonam/login.html",
          {"message": "Invalid username and/or password."
@@ -40,7 +44,7 @@ def register(request):
 
         # Ensure password matches confirmation
         password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
+        confirmation = request.POST["conform_password"]
         if password != confirmation:
             return render(request, "poonam/register.html", {
                 "message": "Passwords must match."
@@ -58,6 +62,7 @@ def register(request):
     else:
         return render(request, "poonam/register.html")
 
+@login_required(login_url="poonam/login")
 def all_floors(request):
     floors = floor.objects.all()
     return render(request, 'poonam/floors.html', {'floors': floors})
@@ -98,54 +103,84 @@ def delete_floor(request, id):
     return HttpResponseRedirect(reverse('floor')) 
 
 
-def all_rooms(request):
+def all_rooms_type(request):
     rooms = rooms_type.objects.all()
     return render(request, 'poonam/room_type.html',{'rooms':rooms})
 
 
-def add_room(request):
+def add_room_type(request):
     if request.method == "POST":
-       name = request.POST["name"]
+       name = request.POST["type"]
+    #    Ac_room = request.POST["Ac_room"]
+    #    without_Ac = request.POST[]
        try:
            a = rooms_type(type_name = name)
            a.save()
        except:
-           return render(request, 'poonam/add_room.html',{"message":'Try Again'})
-       return HttpResponseRedirect(reverse('rooms'))    
+           return render(request, 'poonam/add_room_type.html',{"message":'Try Again'})
+       return HttpResponseRedirect(reverse('rooms_type'))    
     else:
-        return render(request, 'poonam/add_room.html')
+        return render(request, 'poonam/add_room_type.html')
   
 
-def edit_room(request,id):
+def edit_room_type(request,id):
     room = rooms_type.objects.get(id=id)
     if request.method=="POST":
-       name= request.POST["edit_room"]
+       name= request.POST["edit_room_type"]
        room.type_name= name
        try:  
             room.save()
        except:
-        return render(request, "poonam/edit_room.html", {'rooms':room , 'message':'please try again'})
-       return HttpResponseRedirect(reverse('rooms'))
+        return render(request, "poonam/edit_room_type.html", {'rooms':room , 'message':'please try again'})
+       return HttpResponseRedirect(reverse('rooms_type'))
     else:
-     return render(request, "poonam/edit_room.html",{'rooms':room})
+     return render(request, "poonam/edit_room_type.html",{'rooms':room})
 
 
-def delete_room(request, id):
+def delete_room_type(request, id):
     delete = rooms_type.objects.get(id=id)
     rooms = rooms_type.objects.all()
     try:
         delete.delete()
     except:
         return render(request, 'poonam/room_type.html',{'rooms':rooms}) 
-    return HttpResponseRedirect(reverse('rooms'))
+    return HttpResponseRedirect(reverse('rooms_type'))
 
 
 def rooms_information(request):
-    information =rooms.objects.all()
-    return render(request, 'poonam/all_rooms.html',{'all_room':information})
+    room_information =rooms.objects.all()
+    return render(request, 'poonam/all_rooms.html',{'room_information': room_information})
 
 
 
+def add_room(request):
+    floors_data = floor.objects.all()
+    typeData = rooms_type.objects.all()
+    if (request.method == 'POST'):
+        # floor_id = request.POST['']
+        floor_id = request.POST['floors']
+        type_id = request.POST['types']
+        room_nos = request.POST['no']
+        cost = request.POST['cost']
+        availiblitys = request.POST['availibility']
+        sel_floor = floor.objects.get(id=floor_id)
+        type_room = rooms_type.objects.get(id=type_id)
+        # print(room_nos, cost, availiblitys, sel_floor.floor_name, type_room.type_name)
+        a = rooms(room_no = room_nos, type_id = type_room, room_cost = cost, floor_id = sel_floor, availibility = availiblitys)
+        try:
+           a.save()
+        except:
+            return render(request, 'poonam/add_room.html',{'floors': floors_data, 'types': typeData,  "message":'Try Again'})
+        return HttpResponseRedirect(reverse('rooms_information'))   
+    #     a = rooms(room_no = room_nos, type_name_id = type_room, room_cost = cost, floor_id = sel_floor, availibility = availiblitys)
+    #     a.save()
+    #     # try:
+            
+    #     # except:
+    #     #     return render(request, 'poonam/add_room.html',{'floors': floors_data, 'types': typeData,  "message":'Try Again'})
+    #     return HttpResponseRedirect(reverse('rooms_information'))
+    else:
+        return render(request, 'poonam/add_room.html', {'floors': floors_data, 'types': typeData})
 
            
 

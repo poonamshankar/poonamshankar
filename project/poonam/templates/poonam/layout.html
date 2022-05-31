@@ -43,11 +43,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<span class="menu"><img src="{% static 'assets/images/menu.png'%}" alt=""/></span>
 				<nav class="cl-effect-11" id="cl-effect-11">
 					<ul class="nav1">
+						
 						<li><a class="active" href="index.html" data-hover="HOME">HOME</a></li>
-						<li><a href="about.html" data-hover="ABOUT">ABOUT</a></li>
-						<li><a href="typography.html" data-hover="SERVICES">SERVICES</a></li>
-						<li><a href="booking.html" data-hover="BOOKING">BOOKING</a></li>
-						<li><a href="contact.html" data-hover="CONTACT">CONTACT</a></li>
+						<li><a  class="active"href="{% url 'rooms_type' %}" data-hover="Room_Type">Room_Type</a></li>
+						<li><a  class="active"href="{% url 'floor' %}" data-hover="Floors">Floors</a></li>
+						<li><a  class="active"href="typography.html" data-hover="SERVICES">SERVICES</a></li>
+						<li><a  class="active"href="booking.html" data-hover="BOOKING">BOOKING</a></li>
+						<li><a  class="active"href="contact.html" data-hover="CONTACT">CONTACT</a></li>
+					
 					</ul>
 				</nav>
 				<!-- script for menu -->
@@ -63,11 +66,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<div class="social-icons">
 				<ul>
-					<li><a href="#" class="f1"></a></li>
+					<!-- <li><a href="#" class="f1"></a></li>
 					<li><a href="#" class="f2"></a></li>
 					<li><a href="#" class="f3"></a></li>
-					<li><a href="#" class="f4"></a></li>
+					<li><a href="#" class="f4"></a></li> -->
+					{% if user.is_authenticated %}
 					<li><a href="{% url 'logout' %}">LogOut</a></li>
+
+					{% endif %}
 				</ul>
 			</div>
 			<div class="clearfix"></div>
@@ -474,7 +480,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<h3>NAVIGATION</h3>
 				<ul>
 					<li><a href="index.html">Home</a></li>
-					<li><a href="about.html">About</a></li>
+					<li><a href="{% url 'rooms_type'%}">Room_Type</a></li>
+					<li><a href="{% url 'floor'%}">Floors</a></li>
 					<li><a href="typography.html">Services</a></li>						
 					<li><a href="booking.html">Booking</a></li>
 					<li><a href="contact.html">Contact</a></li>

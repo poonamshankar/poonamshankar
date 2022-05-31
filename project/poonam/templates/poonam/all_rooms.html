@@ -10,27 +10,53 @@
 		<h2 class="tittle-one"> Rooms List</h2>
         <!-- <a href=""></a> -->
         <div class="container">
-            <a href="{% url 'add_floor' %}" class="btn btn-danger">Add Information</a>
+            <a href="{% url 'add_room' %}" class="btn btn-danger">Add Information</a>
 			<table class="table">
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Floor</th>
+                    <th>Type</th>
+                    <th>Room_No</th>
+                    <th>Cost</th>
+                    <th>Availibility</th>
                     <th>Actions</th>
                 </tr>
-                {% for i in floors %}
+                {% for i in rooms_information %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.floor_id.floor}}</td>
+                    <td>{{i.type_id.rooms_type}}</td>
+                    <td>Room_No:{{i.room_no}}</td>
+                    <td>{{i.Availibility}}</td>
+                    <td>
+                        <a href=" {% url 'edit_room' i.id %} "  class="btn btn-primary"> Edit</a>
+                        <a href=" {% url 'delete_room' i.id %}"  class="btn btn-primary"> Delete</a>
+                   </td>
+                </tr>
+                {% endfor %}
+                <!-- <tr>
+                    <th>ID</th>
+                    <th>Room_NO</th>
+                    <th>Type</th>
+                    <th>Cost</th>
+                    <th>Floor</th>
+                    <th>Availibility</th>
+                    <th>Actions</th>
+                </tr>
+                {% for i in rooms_information %}
                     <tr>
                         <td>{{i.id}}</td>
                         <td>Room_NO: {{i.room_no}}</td>
-                        <td>{{i.type_id}}</td>
+                        <td>{{i.type_id.rooms_type}}</td>
                         <td>{{i.room_cost}}</td>
-                        <td>{{i.floor_id}}</td>
+                        <td>{{i.floor_id.floor}}</td>
                         <td>{{i.availibility}}</td>
                         <td>
-                            <a href="{% url 'edit_floor' i.id %}" class="btn btn-primary">Edit</a>
-                            <a href="{% url 'delete_floor' i.id %}" class="btn btn-primary">Delete</a>
+                             <a href=" {% url 'edit_room' i.id %} "  class="btn btn-primary"> Edit</a>
+                             <a href=" {% url 'delete_room' i.id %}"  class="btn btn-primary"> Delete</a>
                         </td>
                     </tr>
-                {% endfor %}
+                {% endfor %} -->
             </table>
 			     <div class="clearfix"></div>
 		</div>
