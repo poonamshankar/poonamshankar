@@ -1,13 +1,13 @@
 {% extends 'poonam/layout.html' %}
 
-{% block body %}
 
+{% block body %}
     {% if message %}
-        <div class="alert-danger">
-            {{message}}
-        </div>
+    <div class="alert-danger">
+        {{message}}
+    </div>
     {% endif %}
-    <form action="{% url 'add_room' %}" method="post">
+    <form action="{% url 'edit_room' rooms_information.id  %}" method="post">
         {% csrf_token %}
         <select name="floors" id="">
             {% for i in floors %}
@@ -20,11 +20,11 @@
                 <option value="{{i.id}}">{{i.type_name}}</option>
             {% endfor %}
         </select>
-        <input type="number" name="no" required placeholder="enter room no" min="1">
-        <input type="number" name="cost" required placeholder="enter room cost" min="100">
+        <input type="number" name="no" value="{{rooms_information.room_no}}" required placeholder="enter room no" min="1">
+        <input type="number" name="cost" value="{{rooms_information.cost}}" required placeholder="enter room cost" min="100">
         <!-- <input type="text" name="availibility" required> -->
         <label for="">Room Availibility</label>
-        <input type="checkbox" name="avail" value="True">
-        <input type="submit" value="Add Room">
+        <input type="checkbox" value="{{rooms_information.availibility}}"  name="avail" >
+        <input type="submit" value="Edit Room">
     </form>
 {% endblock %}
